@@ -7,18 +7,15 @@ import cookieParser from "cookie-parser";
 const app = express()
 const PORT = 4040;
 
-
 //모듈의 express 모듈이 필요하다. 
 // module > express > lib > router > index.js
 // index.js 에는 다른 필요한 것들이 작성되어있다. 
 // respond with "hello world" when a GET request is made to the homepage
-
 //터미널에서 node index.js 를 눌러 서버를 실행 웹브라우저에서 localhost:4000 으로 연결이 된다.
 // 터미널에서 ctrl C 를 누르게 되면 node가 종료된다.
 
-
 const handleListening = () => console.log(`Listening on: http://localhost:${PORT}`);
-const handleHome = (req, res) => res.send('hi from home3');
+const handleHome = (req, res) => res.send('hi from home');
 const handleProfile = (req, res) => res.send("hi you are in Profile");
 const betweenHome = (req, res, next) => {
     console.log("between");
