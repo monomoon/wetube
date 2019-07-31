@@ -5,7 +5,7 @@ import helmet from "helmet";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 const app = express()
-const PORT = 4040;
+const PORT = 4000;
 
 //모듈의 express 모듈이 필요하다. 
 // module > express > lib > router > index.js
