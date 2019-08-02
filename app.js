@@ -22,13 +22,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 //form이나 json 통해서 사용자가 입력한 정보들 회원가입,사진,아이디... 등을 검토
 app.use(morgan("dev")); // 로그에 로그인에 관련한 정보가 표시된다.
  // 미들웨어로 handleHome과 handleProfile로 이동할때 중간에 실행이 된다.
- app.use(localsMiddleware);
- app.use(routes.home, globalRouter);
+app.use(localsMiddleware);
+app.use(routes.home, globalRouter);
 app.use(routes.videos, videoRouter);
 app.use(routes.users, userRouter); 
 // get이 아니고 use를 사용하게 되면 userRouter 전체를 사용하게 된다.
 // app.get("/", handleHome); 
 // app.get("/profile",handleProfile);
+// routes.users -> ~:4000/users/ 뒤에 :id/change-password, :id/edit-profile, :id/user-detail 같은 경로가 따라 오게 된다. 
 
 export default app; 
 // default로 export하면 import app from "./app"이 된다. router와 비교해보자

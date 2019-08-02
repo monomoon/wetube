@@ -9,14 +9,14 @@ const SEARCH = "/search";
 
 const USERS = "/users";
 const USER_DETAIL = "/:id";
-const EDIT_PROFILE = "/:id/edit-profile";
-const CHANGE_PASSWORD = "/:id/change-password";
+const EDIT_PROFILE = "/edit-profile";
+const CHANGE_PASSWORD = "/change-password";
 
 //videos
 
-const VIDEOS = "/videos";
-const UPLOAD = "/upload";
-const VIDEO_DETAILS = "/:id";
+const VIDEOS = "/videos"; //app.js에 import
+const UPLOAD = "/upload"; 
+const VIDEO_DETAILS = "/:id"; // videos/:id/...
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
