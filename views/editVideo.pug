@@ -1,10 +1,8 @@
 extends layouts/main.pug
 block content
     p edit video!
-    .form-container
-        form(action=routes.editVideo method="post")
-            input(type="text" name = "videoTitle" placeholder="Title")
-            input(type="text" name = "videoDescription" placeholder="Description")
-            input(type="submit" value="Update Video")
-        a.form-dontainer__link(href=routes.deleteVideo) Delete Video
-    
+    form(action=routes.videoDetail method="post")
+        input(type="text" name="editVideoTitle" placeholder="Title")
+        input(type="text" name="editVideoDescription" placeholder="Description")
+        input(type="submit" value="Update Video")
+    a(href=routes.deleteVideo) Delete Video

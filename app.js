@@ -1,8 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import userRouter  from "./router/userRouter";
@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan("dev")); // 로그에 로그인에 관련한 정보가 표시된다.
  // 미들웨어로 handleHome과 handleProfile로 이동할때 중간에 실행이 된다.
 app.use(localsMiddleware);
+
 app.use(routes.home, globalRouter);
 app.use(routes.videos, videoRouter);
 app.use(routes.users, userRouter); 

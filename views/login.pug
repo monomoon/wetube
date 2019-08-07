@@ -1,7 +1,7 @@
 extends layouts/main.pug
 block content
-    .form_container
-        form(action = "/login", method="post")
+    .form__container
+        form(action =routes.home, method="post")
             input(type="text", name="id", placeholder="id")
             input(type="password", name="password", placeholder="password")
             input(type="submit", value="Log in")
