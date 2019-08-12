@@ -12,8 +12,6 @@ export const postJoin = (req, res) => {
     res.status(400);
     res.render("join", { pageTitle: "Join" });
   } else {
-    // To Do: Register User
-    // To Do: Log user in
     res.redirect(routes.home);
   }
 };
