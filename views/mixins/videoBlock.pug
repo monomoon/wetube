@@ -1,9 +1,9 @@
 mixin videoBlock(video = {})
     .videoBlock
-        a(href=routes.videoDetail(video.id))
         video.videoBlock__thumbnail(src=video.videoFile,controls='true')
-        h4.videoBlock__title=video.title 
-        h6.videoBlock__views=video.views
+        a(href=routes.videoDetail(video.id))
+            h4.videoBlock__title=video.title 
+            h6.videoBlock__views=video.views
 
 //- mixin 은 내용은 다르고 같은 패턴의 데이터를 반복해서 표시될때 사용한다. allow you to create reusable blocks of pug 
 //-block은 큰 html 덩어리중 일부를 분할 (footer header 부분 분할)

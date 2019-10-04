@@ -16,6 +16,7 @@ const app = express()
 app.use(helmet());// 보안기능의 미들웨어
 app.set("view engine","pug"); 
 // view 엔진을 퍼그로 설정
+app.use("/uploads", express.static("uploads"));
 app.use(cookieParser()); // 쿠키를 전달 받아 사용자 인증과 같이 쿠키 검사에 쓰인다.
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({extended: true}));
