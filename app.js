@@ -3,11 +3,15 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import passport from "passport";
+import session from "express-session";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import userRouter  from "./router/userRouter";
 import videoRouter from "./router/videoRouter";
 import globalRouter from "./router/globalRouter";
+
+import "./passport";
 
 const app = express()
 
@@ -17,12 +21,23 @@ app.use(helmet());// 보안기능의 미들웨어
 app.set("view engine","pug"); 
 // view 엔진을 퍼그로 설정
 app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("static"));
 app.use(cookieParser()); // 쿠키를 전달 받아 사용자 인증과 같이 쿠키 검사에 쓰인다.
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({extended: true}));
 //form이나 json 통해서 사용자가 입력한 정보들 회원가입,사진,아이디... 등을 검토
 app.use(morgan("dev")); // 로그에 로그인에 관련한 정보가 표시된다.
  // 미들웨어로 handleHome과 handleProfile로 이동할때 중간에 실행이 된다.
+app.use(
+    session({
+        secret:"process.env.COOKIE_SECRET",
+        resave:false,
+        saveUninitialized:true
+})
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(localsMiddleware);
 
 app.use(routes.home, globalRouter);
