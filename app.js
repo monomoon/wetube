@@ -4,7 +4,9 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
+import mongoose from "mongoose";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
 import userRouter  from "./router/userRouter";
@@ -13,7 +15,9 @@ import globalRouter from "./router/globalRouter";
 
 import "./passport";
 
-const app = express()
+const app = express();
+
+const CookieStore = MongoStore(session);
 
 // const handleHome = (req, res) => res.send('hi from home');
 // const handleProfile = (req, res) => res.send("hi you are in Profile");
@@ -30,10 +34,11 @@ app.use(morgan("dev")); // 로그에 로그인에 관련한 정보가 표시된�
  // 미들웨어로 handleHome과 handleProfile로 이동할때 중간에 실행이 된다.
 app.use(
     session({
-        secret:"process.env.COOKIE_SECRET",
-        resave:false,
-        saveUninitialized:true
-})
+        secret: process.env.COOKIE_SECRET,
+        resave: true,
+        saveUninitialized: false,
+        store: new CookieStore({mongooseConnection: mongoose.connection})
+    })
 );
 app.use(passport.initialize());
 app.use(passport.session());
