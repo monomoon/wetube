@@ -61,6 +61,21 @@ export const postGithubLogin = (req, res) => {
   res.redirect(routes.home)
 }
 
+export const facebookLogin = passport.authenticate("facebook");
+
+export const facebookLoginCallback = (
+  accessToken,
+  refreshToken,
+  profile,
+  cb
+) => {
+  console.log(accessToken, refreshToken, profile, cb);
+};
+
+export const postFacebookLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+
 //logout
 export const logout = (req, res) => {
   req.logout();
@@ -82,8 +97,7 @@ export const userDetail = async(req, res) => {
   }
 };
 
-export const editProfile = (req, res) => res.render("editProfile", {pageTitle: "Edit Profile"});
+export const getEditProfile = (req, res) => res.render("editProfile", {pageTitle: "Edit Profile"});
+export const postEditProfile = (req, res) => res.render("editProfile", {pageTitle: "Edit Profile"});
 export const changePassword = (req, res) => res.render("changePassword", {pageTitle: "Change Password"});
-
-
     
