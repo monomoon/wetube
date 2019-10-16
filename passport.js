@@ -4,7 +4,7 @@ import GithubStrategy from "passport-github";
 import FacebookStrategy from "passport-facebook";
 import User from "./models/User";
 import { githubLoginCallback, facebookLoginCallback } from "./controller/userController";
-
+ 
 passport.use(User.createStrategy());
 
 passport.use(
@@ -14,7 +14,7 @@ passport.use(
         callbackURL: `http://localhost:4000${routes.githubCallback}`
     }, githubLoginCallback),
 );
-
+ 
 passport.use(
     new FacebookStrategy(
       {
