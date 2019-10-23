@@ -19,7 +19,7 @@ _passport["default"].use(_User["default"].createStrategy());
 _passport["default"].use(new _passportGithub["default"]({
   clientID: process.env.GH_ID,
   clientSecret: process.env.GH_SECRET,
-  callbackURL: "http://localhost:4000".concat(_routes["default"].githubCallback)
+  callbackURL: process.env.PRODUCTION ? "https://warm-crag-66826.herokuapp.com".concat(_routes["default"].githubCallback) : "http://localhost:4000".concat(_routes["default"].githubCallback)
 }, _userController.githubLoginCallback));
 
 _passport["default"].use(new _passportFacebook["default"]({
