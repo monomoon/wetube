@@ -27,7 +27,8 @@ var DELETE_VIDEO = "/:id/delete"; //Api
 
 var API = "/api";
 var REGISTER_VIEW = "/:id/view";
-var ADD_COMMENT = "/:id/comment"; //Github
+var ADD_COMMENT = "/:id/comment";
+var DELETE_COMMENT = "/:id/delete-comment"; //Github
 
 var GITHUB = "/auth/github";
 var GITHUB_CALLBACK = "/auth/github/callback"; //facebook 
@@ -80,7 +81,8 @@ var routes = {
   facebookCallback: FB_CALLBACK,
   api: API,
   registerView: REGISTER_VIEW,
-  addComment: ADD_COMMENT
+  addComment: ADD_COMMENT,
+  deleteComment: DELETE_COMMENT
 };
 var _default = routes;
 exports["default"] = _default;

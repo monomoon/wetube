@@ -1,6 +1,7 @@
 import Video from "../models/Videos";
-import routes from "../routes";
 import Comment from "../models/Comment";
+import User from "../models/User";
+import routes from "../routes";
 
 export const home = async (req, res) => {
     try{
@@ -125,6 +126,8 @@ export const postRegisterView = async(req, res) => {
     }
 };
 
+//add Comment
+
 export const postAddComment = async(req, res) =>{
     const {
         params: { id },
@@ -132,18 +135,43 @@ export const postAddComment = async(req, res) =>{
         user
     } = req;
     try{
-        const video = Video.findById(id);
+        const video = await Video.findById(id);
+        const commentedUser = await User.findById(user.id);
         const newComment = await Comment.create({
             text: comment,
-            creater: user.id
+            creator: user.id
         });
+        commentedUser.comments.push(newComment.id);
         video.comments.push(newComment.id);
         video.save();
+        commentedUser.save();
     }catch(error){
+        console.log(error);
         res.status(400);
     }finally{
-        res.end();
+        res.end(); 
     }
-};
+}; 
+
+//delete comment
+
+export const postDeleteComment = async (req, res) => {
+    const {
+      params: { id },
+      user
+    } = req;
+    try {
+      const comment = await Comment.findById(id);
+      if (comment.creator != user.id) {
+        throw Error();
+      } else {
+        await Comment.findOneAndDelete({ _id: id });
+      }
+    } catch (error) {
+      res.status(400);
+    } finally {
+      res.end();
+    }
+  };
 //pug를 사용하게된다면 send 에서 render로 바꿈 render("home")은 views 폴더에서 home.pug파일을 자동으로 찾아서 화면에 렌더링하게된다.j
 // render 함수의 첫번째 인자 render( 1: 뷰템플릿, 2?: 템플릿에 추가할 객체object (정보), 3?: 콜백함수) 

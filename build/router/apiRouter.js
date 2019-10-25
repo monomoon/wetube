@@ -17,5 +17,6 @@ var apiRouter = _express["default"].Router();
 
 apiRouter.post(_routes["default"].registerView, _videoController.postRegisterView);
 apiRouter.post(_routes["default"].addComment, _videoController.postAddComment);
+apiRouter.post(_routes["default"].deleteComment, _videoController.postDeleteComment);
 var _default = apiRouter;
 exports["default"] = _default;

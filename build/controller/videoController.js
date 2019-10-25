@@ -3,13 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.postAddComment = exports.postRegisterView = exports.deleteVideo = exports.postEditVideo = exports.getEditVideo = exports.videoDetail = exports.postUpload = exports.getUpload = exports.search = exports.home = void 0;
+exports.postDeleteComment = exports.postAddComment = exports.postRegisterView = exports.deleteVideo = exports.postEditVideo = exports.getEditVideo = exports.videoDetail = exports.postUpload = exports.getUpload = exports.search = exports.home = void 0;
 
 var _Videos = _interopRequireDefault(require("../models/Videos"));
 
-var _routes = _interopRequireDefault(require("../routes"));
-
 var _Comment = _interopRequireDefault(require("../models/Comment"));
+
+var _User = _interopRequireDefault(require("../models/User"));
+
+var _routes = _interopRequireDefault(require("../routes"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -413,7 +415,8 @@ function () {
   return function postRegisterView(_x15, _x16) {
     return _ref8.apply(this, arguments);
   };
-}();
+}(); //add Comment
+
 
 exports.postRegisterView = postRegisterView;
 
@@ -423,50 +426,124 @@ function () {
   var _ref9 = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee9(req, res) {
-    var id, comment, user, video, newComment;
+    var id, comment, user, video, commentedUser, newComment;
     return regeneratorRuntime.wrap(function _callee9$(_context9) {
       while (1) {
         switch (_context9.prev = _context9.next) {
           case 0:
             id = req.params.id, comment = req.body.comment, user = req.user;
             _context9.prev = 1;
-            video = _Videos["default"].findById(id);
-            _context9.next = 5;
+            _context9.next = 4;
+            return _Videos["default"].findById(id);
+
+          case 4:
+            video = _context9.sent;
+            _context9.next = 7;
+            return _User["default"].findById(user.id);
+
+          case 7:
+            commentedUser = _context9.sent;
+            _context9.next = 10;
             return _Comment["default"].create({
               text: comment,
-              creater: user.id
+              creator: user.id
             });
 
-          case 5:
+          case 10:
             newComment = _context9.sent;
+            commentedUser.comments.push(newComment.id);
             video.comments.push(newComment.id);
             video.save();
-            _context9.next = 13;
+            commentedUser.save();
+            _context9.next = 21;
             break;
 
-          case 10:
-            _context9.prev = 10;
+          case 17:
+            _context9.prev = 17;
             _context9.t0 = _context9["catch"](1);
+            console.log(_context9.t0);
             res.status(400);
 
-          case 13:
-            _context9.prev = 13;
+          case 21:
+            _context9.prev = 21;
             res.end();
-            return _context9.finish(13);
+            return _context9.finish(21);
 
-          case 16:
+          case 24:
           case "end":
             return _context9.stop();
         }
       }
-    }, _callee9, null, [[1, 10, 13, 16]]);
+    }, _callee9, null, [[1, 17, 21, 24]]);
   }));
 
   return function postAddComment(_x17, _x18) {
     return _ref9.apply(this, arguments);
   };
+}(); //delete comment
+
+
+exports.postAddComment = postAddComment;
+
+var postDeleteComment =
+/*#__PURE__*/
+function () {
+  var _ref10 = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee10(req, res) {
+    var id, user, comment;
+    return regeneratorRuntime.wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            id = req.params.id, user = req.user;
+            _context10.prev = 1;
+            _context10.next = 4;
+            return _Comment["default"].findById(id);
+
+          case 4:
+            comment = _context10.sent;
+
+            if (!(comment.creator != user.id)) {
+              _context10.next = 9;
+              break;
+            }
+
+            throw Error();
+
+          case 9:
+            _context10.next = 11;
+            return _Comment["default"].findOneAndDelete({
+              _id: id
+            });
+
+          case 11:
+            _context10.next = 16;
+            break;
+
+          case 13:
+            _context10.prev = 13;
+            _context10.t0 = _context10["catch"](1);
+            res.status(400);
+
+          case 16:
+            _context10.prev = 16;
+            res.end();
+            return _context10.finish(16);
+
+          case 19:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, null, [[1, 13, 16, 19]]);
+  }));
+
+  return function postDeleteComment(_x19, _x20) {
+    return _ref10.apply(this, arguments);
+  };
 }(); //pug를 사용하게된다면 send 에서 render로 바꿈 render("home")은 views 폴더에서 home.pug파일을 자동으로 찾아서 화면에 렌더링하게된다.j
 // render 함수의 첫번째 인자 render( 1: 뷰템플릿, 2?: 템플릿에 추가할 객체object (정보), 3?: 콜백함수) 
 
 
-exports.postAddComment = postAddComment;
+exports.postDeleteComment = postDeleteComment;

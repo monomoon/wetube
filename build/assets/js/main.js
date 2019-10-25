@@ -7,3 +7,5 @@ require("./videoPlayer");
 require("./videoRecorder");
 
 require("./addComment");
+
+require("./deleteComment");
