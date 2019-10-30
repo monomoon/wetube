@@ -15,6 +15,7 @@ import userRouter  from "./router/userRouter";
 import videoRouter from "./router/videoRouter";
 import globalRouter from "./router/globalRouter";
 import apiRouter from "./router/apiRouter";
+import flash from "express-flash";
 
 import "./passport";
 
@@ -45,6 +46,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use(localsMiddleware);
 
